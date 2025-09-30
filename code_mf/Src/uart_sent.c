@@ -32,10 +32,10 @@ void uart_sent_debug()
         usart6_printf("%d,%d,%f,%f,%f,%f \r\n",
                       motor_can1_data[4].ecd,
                       YAW_6020_ID1_GIVEN_CURRENT,
-                      yaw_angle_from_bmi088,
-                      YAW_6020_ID1_GIVEN_ANGLE,
-                      YAW_6020_ID1_GIVEN_SPEED,
-                      yaw_speed_from_bmi088);
+                      pitch_angle_from_bmi088,
+                      PITCH_6020_ID2_GIVEN_ANGLE,
+                      PITCH_6020_ID2_GIVEN_SPEED,
+                      pitch_speed_from_bmi088);
 
 
 
