@@ -17,24 +17,25 @@
 #include "jy61p.h"
 #include "chassis_motor_control.h"
 #include "auto_aim.h"
-
-
-
-
+#include "gimbal_motor_control.h"
 
 
 void uart_sent_debug()
 {
     while (1)
     {
-        usart6_printf("%d,%d,%f,%f,%f,%f,%f \r\n",
-                      rc_s1,
-                      auto_aim_rx_packet.tracking,
-                      pitch_radian_from_bmi088,
+//        usart6_printf("%f,%f,%f,%f \r\n",
+//                      PITCH_6020_ID2_GIVEN_ANGLE,
+//                      pitch_angle_from_bmi088,
+//                      PITCH_6020_ID2_GIVEN_SPEED,
+//                      pitch_speed_from_bmi088);
+        usart6_printf("%d,%d,%f,%f,%f,%f \r\n",
+                      motor_can1_data[4].ecd,
+                      YAW_6020_ID1_GIVEN_CURRENT,
                       yaw_angle_from_bmi088,
-                      auto_aim_rx_packet.y,
-                      auto_aim_rx_packet.x,
-                      infantry_auto_aim_target.yaw_angle);
+                      YAW_6020_ID1_GIVEN_ANGLE,
+                      YAW_6020_ID1_GIVEN_SPEED,
+                      yaw_speed_from_bmi088);
 
 
 

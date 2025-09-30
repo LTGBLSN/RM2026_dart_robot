@@ -48,13 +48,13 @@
 #define CHASSIS_3508_ID4_SPEED_PID_KD   0.0f
 
 
-#define CHASSIS_FOLLOW_GIMBAL_ANGLE_PID_KP        3.0f
+#define CHASSIS_FOLLOW_GIMBAL_ANGLE_PID_KP        40.0f
 #define CHASSIS_FOLLOW_GIMBAL_ANGLE_PID_KI        0.0f
 #define CHASSIS_FOLLOW_GIMBAL_ANGLE_PID_KD        0.5f
 #define CHASSIS_FOLLOW_GIMBAL_ANGLE_PID_OUT_MAX   3000.0f
 #define CHASSIS_FOLLOW_GIMBAL_ANGLE_PID_KI_MAX    0.0f
 
-#define YAW_MID_ECD 4760
+#define YAW_MID_ECD 6435
 
 #define CHASSIS_PID_COMPUTE_FREQUENCY 1000  // Hz
 
@@ -80,6 +80,8 @@ extern pid_type_def chassis_follow_gimbal_pid;
 void rc_to_gimbal_speed_compute();
 
 void gimbal_to_chassis_speed_compute();
+
+void chassis_follow_gimbal_pid_preprocess();//µ◊≈Ãπ˝¡„ºÏ≤‚‘§¥¶¿Ì
 
 void yaw_ecd_angle_to_radian();//±‡¬Î∆˜ªªÀ„ª°∂»≤Ó
 

@@ -1227,8 +1227,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "D:/RoboMaster_git/RM2026_infantry_robot/cmake-build-debug",
-		"source" : "D:/RoboMaster_git/RM2026_infantry_robot"
+		"build" : "D:/RoboMaster_git/RM2026_sentinel_robot/cmake-build-debug",
+		"source" : "D:/RoboMaster_git/RM2026_sentinel_robot"
 	},
 	"version" : 
 	{

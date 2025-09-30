@@ -171,14 +171,14 @@ extern float INS_quat[4] ;
 extern float INS_angle[3] ;
 extern float INS_degree[3] ;
 
-extern float pitch_speed_from_bmi088 ;
-extern float yaw_speed_from_bmi088 ;
 extern float roll_speed_from_bmi088 ;
+extern float yaw_speed_from_bmi088 ;
+extern float pitch_speed_from_bmi088 ;
 
 
-extern float pitch_angle_from_bmi088 ;
-extern float yaw_angle_from_bmi088 ;
 extern float roll_angle_from_bmi088 ;
+extern float yaw_angle_from_bmi088 ;
+extern float pitch_angle_from_bmi088 ;
 
 extern float pitch_radian_from_bmi088 ;
 extern float yaw_radian_from_bmi088 ;
@@ -198,6 +198,9 @@ extern float aim_z ;
 
 
 extern float yaw_imu_preprocess ;
+
+extern float chassis_follow_gimbal_error_preprocess ;
+
 
 
 extern struct armor_posture armor[4] ;

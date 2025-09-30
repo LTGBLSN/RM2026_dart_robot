@@ -185,14 +185,14 @@ float INS_angle[3] = {0.0f, 0.0f, 0.0f};
 float INS_degree[3] = {0.0f, 0.0f, 0.0f};
 
 
-float pitch_speed_from_bmi088 ;
-float yaw_speed_from_bmi088 ;
 float roll_speed_from_bmi088 ;
+float yaw_speed_from_bmi088 ;
+float pitch_speed_from_bmi088 ;
 
 
-float pitch_angle_from_bmi088 ;
-float yaw_angle_from_bmi088 ;
 float roll_angle_from_bmi088 ;
+float yaw_angle_from_bmi088 ;
+float pitch_angle_from_bmi088 ;
 
 float pitch_radian_from_bmi088 ;
 float yaw_radian_from_bmi088 ;
@@ -214,9 +214,13 @@ float aim_z ;
 
 float yaw_imu_preprocess ;
 
+float chassis_follow_gimbal_error_preprocess ;
+
 struct armor_posture armor[4] ;
 
 struct auto_aim_calculation_gimbal_target infantry_auto_aim_target ;
+
+
 
 
 

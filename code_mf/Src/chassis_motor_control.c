@@ -36,11 +36,14 @@ void chassis_motor_control()
 {
     while (1)
     {
-//        CHASSIS_FOLLOW_GIMBAL_GIVEN_SPEED = chassis_follow_gimbal_pid_loop(YAW_MID_ECD);//底盘跟随
         rc_to_gimbal_speed_compute();//遥控器转换为云台速度
         yaw_ecd_angle_to_radian();
+
         gimbal_to_chassis_speed_compute();//底盘速度解算
-        chassis_settlement();//轮系速度解算
+
+
+        chassis_follow_gimbal_pid_preprocess();
+        chassis_settlement();//轮系速度解算,底盘跟随赋值
         motor_chassis_pid_compute();//pid速度
 
         osDelay((1/CHASSIS_PID_COMPUTE_FREQUENCY)*1000);
@@ -109,6 +112,8 @@ void rc_to_gimbal_speed_compute()
 
 }
 
+
+
 void yaw_ecd_angle_to_radian()
 {
 
@@ -125,6 +130,22 @@ void gimbal_to_chassis_speed_compute()
 
 
 
+}
+
+void chassis_follow_gimbal_pid_preprocess()
+{
+    if((0.0f - yaw_angle_difference) < -180.0f )
+    {
+        chassis_follow_gimbal_error_preprocess = yaw_angle_difference - 360.0f ;
+    }
+    else if((0.0f - yaw_angle_difference) > 180.0f )
+    {
+        chassis_follow_gimbal_error_preprocess = yaw_angle_difference + 360.0f ;
+    }
+    else
+    {
+        chassis_follow_gimbal_error_preprocess = yaw_angle_difference ;
+    }
 }
 
 
@@ -167,9 +188,10 @@ void chassis_settlement()
             }
             else
             {
-                CHASSIS_FOLLOW_GIMBAL_GIVEN_SPEED = chassis_follow_gimbal_pid_loop(YAW_MID_ECD);//底盘跟随
+                //                chassis_vround = 0 ;//在这给底盘跟随做速度闭环
+                CHASSIS_FOLLOW_GIMBAL_GIVEN_SPEED = chassis_follow_gimbal_pid_loop(0);//底盘跟随
                 chassis_vround = CHASSIS_FOLLOW_GIMBAL_GIVEN_SPEED ;
-//                chassis_vround = 0 ;//在这给底盘跟随做速度闭环
+
             }
 
         }
@@ -303,7 +325,7 @@ void chassis_follow_gimbal_angle_pid_init(void)
 
 float chassis_follow_gimbal_pid_loop(float PITCH_6020_ID2_angle_set_loop)
 {
-    PID_calc(&chassis_follow_gimbal_pid, motor_can1_data[4].ecd , PITCH_6020_ID2_angle_set_loop);
+    PID_calc(&chassis_follow_gimbal_pid, chassis_follow_gimbal_error_preprocess , PITCH_6020_ID2_angle_set_loop);
     float chassis_follow_gimbal_angle_loop = (float)(chassis_follow_gimbal_pid.out);
 
     return chassis_follow_gimbal_angle_loop ;

@@ -38,7 +38,7 @@ pid_type_def shoot_2006_ID3_speed_pid;
 
 
         motor_gimbal_angle_compute();//目标角度控制
-        pid_preprocess();//pid预处理
+        yaw_pid_preprocess();//pid预处理
         motor_gimbal_pid_compute();//云台pid控制
 
         shoot_pid_control();//拨弹盘pid控制
@@ -65,11 +65,15 @@ void motor_gimbal_angle_compute()
 {
      if(mouse_vy == 0 & mouse_vx == 0)
      {
+         //遥控器模式
+
+
+         //pitch轴
          if((PITCH_RC_IN_KP * (float )rc_ch3) < 0 )
          {
-             if(PITCH_6020_ID2_GIVEN_ANGLE < -23.0f )
+             if(PITCH_6020_ID2_GIVEN_ANGLE < PITCH_MAX_ANGLE )
              {
-                 PITCH_6020_ID2_GIVEN_ANGLE = -23.0f ;
+                 PITCH_6020_ID2_GIVEN_ANGLE = PITCH_MAX_ANGLE ;
              }
              else
              {
@@ -78,15 +82,19 @@ void motor_gimbal_angle_compute()
          }
          else
          {
-             if(PITCH_6020_ID2_GIVEN_ANGLE > 25.0f )
+             if(PITCH_6020_ID2_GIVEN_ANGLE > PITCH_MIN_ANGLE )
              {
-                 PITCH_6020_ID2_GIVEN_ANGLE = 25.0f ;
+                 PITCH_6020_ID2_GIVEN_ANGLE = PITCH_MIN_ANGLE ;
              }
              else
              {
                  PITCH_6020_ID2_GIVEN_ANGLE = PITCH_6020_ID2_GIVEN_ANGLE + PITCH_RC_IN_KP * (float )rc_ch3  ;
              }
          }
+
+
+
+         //yaw轴
 
          if(rc_s1 == 1)
          {
@@ -156,7 +164,7 @@ void rc_yaw_input_normalization()
 }
 
 
-void pid_preprocess()
+void yaw_pid_preprocess()
 {
      if((YAW_6020_ID1_GIVEN_ANGLE - yaw_angle_from_bmi088) < -180.0f )
      {
@@ -180,7 +188,8 @@ void motor_gimbal_pid_compute()
 
 
     PITCH_6020_ID2_GIVEN_SPEED = pitch_angle_from_bmi088_pid_loop(PITCH_6020_ID2_GIVEN_ANGLE);//角度环
-    PITCH_6020_ID2_GIVEN_CURRENT = (int16_t) (- pitch_speed_from_bmi088_pid_loop(PITCH_6020_ID2_GIVEN_SPEED)); //速度环
+
+    PITCH_6020_ID2_GIVEN_CURRENT = (int16_t) pitch_speed_from_bmi088_pid_loop(PITCH_6020_ID2_GIVEN_SPEED); //速度环
 
 }
 
@@ -194,8 +203,8 @@ void friction_wheel_speed_control()
         FRICTION_WHEEL_3510_ID2_GIVEN_SPEED = 0 ;
     } else
     {
-        FRICTION_WHEEL_3510_ID1_GIVEN_SPEED = FRICTION_WHEEL_SHOOT_SPEED ;
-        FRICTION_WHEEL_3510_ID2_GIVEN_SPEED = -FRICTION_WHEEL_SHOOT_SPEED ;
+        FRICTION_WHEEL_3510_ID1_GIVEN_SPEED = -FRICTION_WHEEL_SHOOT_SPEED ;
+        FRICTION_WHEEL_3510_ID2_GIVEN_SPEED = FRICTION_WHEEL_SHOOT_SPEED ;
 
     }
 
